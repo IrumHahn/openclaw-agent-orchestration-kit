@@ -1,0 +1,70 @@
+{
+  "runId": "demo-product-page-001",
+  "projectId": "demo-product-page",
+  "goal": "승인 후 모바일 상품 상세페이지 공개",
+  "coordinatorAgentId": "coordinator",
+  "state": "active",
+  "acceptanceCriteria": [
+    "가격과 제품 주장의 근거 확인",
+    "모바일 320px 표시 확인",
+    "사용자 승인 후 게시"
+  ],
+  "tasks": [
+    {
+      "taskId": "A",
+      "workType": "research",
+      "ownerAgentId": "researcher",
+      "dependsOn": [],
+      "state": "accepted",
+      "objective": "제품 사실·가격 조사",
+      "artifactRefs": [
+        "demo://facts-v1"
+      ]
+    },
+    {
+      "taskId": "B",
+      "workType": "writing",
+      "ownerAgentId": "writer",
+      "dependsOn": [
+        "A"
+      ],
+      "state": "working",
+      "objective": "근거 기반 상세 문구",
+      "artifactRefs": []
+    },
+    {
+      "taskId": "C",
+      "workType": "design",
+      "ownerAgentId": "designer",
+      "dependsOn": [
+        "A"
+      ],
+      "state": "working",
+      "objective": "모바일 시각 디자인",
+      "artifactRefs": []
+    },
+    {
+      "taskId": "D",
+      "workType": "coding",
+      "ownerAgentId": "builder",
+      "dependsOn": [
+        "B",
+        "C"
+      ],
+      "state": "planned",
+      "objective": "상세페이지 조립",
+      "artifactRefs": []
+    },
+    {
+      "taskId": "E",
+      "workType": "qa",
+      "ownerAgentId": "reviewer",
+      "dependsOn": [
+        "D"
+      ],
+      "state": "planned",
+      "objective": "가격·모바일·링크 독립 QA",
+      "artifactRefs": []
+    }
+  ]
+}
