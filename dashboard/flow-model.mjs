@@ -35,7 +35,8 @@ export function deriveProjectFlow(project, allTasks) {
   const gate = key => {
     const record = project?.orchestration?.[key];
     if (!record || !text(record.evidenceRef)) return { state: 'unrecorded', evidenceRef: null };
-    const state = ['passed', 'rejected', 'working', 'waiting'].includes(record.state) ? record.state : 'unrecorded';
+    // This legacy board projection cannot authenticate the review or its current input version.
+    const state = record.state === 'passed' ? 'recorded_claim' : ['rejected', 'working', 'waiting'].includes(record.state) ? record.state : 'unrecorded';
     return { state, evidenceRef: record.evidenceRef || null };
   };
   return {

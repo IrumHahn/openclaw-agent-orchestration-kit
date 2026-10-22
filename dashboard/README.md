@@ -1,24 +1,5 @@
-# Project flow view: adapter contract
+# JSON 기반 읽기 전용 실습 데모
 
-Use this view as a **read-only companion** to an existing task board. Do not infer dependencies or QA approvals from task titles, agent names, or completion counts.
+저장소 루트에서 python3 -m http.server 8765 실행 후 http://localhost:8765/dashboard/demo.html 로 연다. 화면은 examples/product-page/scenario.json의 세 스냅샷을 직접 읽는다. 파일 URL에서 fetch가 차단되면 HTTP 서버를 사용한다.
 
-## Inputs
-
-- `projects[]`: `id`, `name`, optional `linkedTasks[]`, optional `blockers[]`, `updatedAt`.
-- `tasks[]`: `id`, `projectId`, `title`, `assignee`, `assigneeName`, `workType`, `status`, `updatedAt`, optional `dependsOn[]`, optional `reviewDecision`, optional `integrationDecision`, optional `result`.
-- `agents[]` (optional): stable `id`, display `name`, capability labels.
-
-Merge project `linkedTasks` IDs with `task.projectId` only after validating each ID exists. Deduplicate by task ID. Orphaned links are “connection needs review,” not a reason to attach a task by title similarity. If no project-linked tasks exist, show an empty state.
-
-## Presentation rules
-
-1. Start with the project, its actual linked task count, current blockers, and last update.
-2. Show responsibility lanes by `workType` if recorded. Missing `workType` is “unclassified,” never guessed from an agent's display name.
-3. Show a dependency arrow only for a recorded `dependsOn` edge. If absent, use side-by-side grouping without a line and label dependencies “not recorded.”
-4. A task `done` with no review evidence is “reported done / review not recorded.” A QA task `done` does not automatically pass a project QA gate.
-5. A blocked task or explicit open project blocker is “confirmed blocked.” A long-unupdated active task is “needs status check,” not definitely failed.
-6. Present the same facts in a one-column, keyboard-accessible layout on mobile. Color is supplementary to text.
-
-## Implementation path
-
-For a current dashboard, keep the existing board as the default and add a “Project flow” read-only view. Select a project, render the derived model, and let task cards deep-link back to the existing detail panel. Add editing only after the server enforces dependency, reviewer, permission, and version rules.
+기존 서비스용 flow-model.mjs는 프로젝트·작업의 명시적 연결만 표시한다. 자유형 passed/evidenceRef와 호출자가 넘긴 verified 플래그는 검증된 게이트가 아니라 recorded_claim으로 표시한다. 운영에서 녹색 통과를 원한다면 서버가 실제 최신 검수·행위자·산출물 버전을 검증한 별도 projection을 제공해야 한다. 이 데모 자체는 읽기 전용이며 자동 디스패치/QA 서버가 아니다.

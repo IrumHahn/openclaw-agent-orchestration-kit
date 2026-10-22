@@ -24,5 +24,9 @@ test('requires explicit evidence for gate pass', () => {
  const project={id:'p',orchestration:{qa:{state:'passed'},integration:{state:'passed',evidenceRef:'artifact://proof'}}};
  const flow=deriveProjectFlow(project,[]);
  assert.equal(flow.qaGate.state,'unrecorded');
- assert.equal(flow.integrationGate.state,'passed');
+ assert.equal(flow.integrationGate.state,'recorded_claim');
+});
+test('a caller-provided verified flag does not prove a gate', () => {
+ const project={id:'p',orchestration:{qa:{state:'passed',evidenceRef:'artifact://proof',verified:true,actorId:'independent-qa',artifactVersion:'v2',decisionId:'review-2'}}};
+ assert.equal(deriveProjectFlow(project,[]).qaGate.state,'recorded_claim');
 });

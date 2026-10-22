@@ -1,43 +1,30 @@
 <!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>에이전트 오케스트레이션 · 실습 데모</title>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>범용 오케스트레이션 실습</title>
 <style>
-:root{font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;color-scheme:dark;background:#0d111b;color:#eef2fa}
-*{box-sizing:border-box}body{margin:0;min-height:100vh}main{max-width:1160px;margin:auto;padding:clamp(20px,4vw,52px)}
-a{color:#a8c6ff}.eyebrow{color:#92a4c7;font-size:12px;letter-spacing:.13em;text-transform:uppercase;font-weight:700}
-h1{font-size:clamp(26px,4vw,42px);letter-spacing:-.04em;margin:8px 0}p{line-height:1.65}.intro{max-width:720px;color:#aebbd3}
-.summary{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 34px}.pill{border:1px solid #2c3852;background:#151d2d;border-radius:99px;padding:9px 13px;font-size:12px;color:#cfdbef}
-.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.stage{border:1px solid #28364f;border-radius:18px;background:#141c2b;padding:17px;min-width:0}
-.stage .step{color:#87a0ca;font-weight:700;font-size:11px;letter-spacing:.1em}.stage h2{font-size:17px;letter-spacing:-.02em;margin:8px 0 14px}.stage small{color:#99abc9}
-.task{display:block;width:100%;margin:10px 0 0;text-align:left;background:#1b2639;border:1px solid #354561;border-radius:12px;color:inherit;padding:14px;cursor:pointer;min-height:44px}
-.task:hover,.task:focus-visible{border-color:#77a8ee;outline:none;box-shadow:0 0 0 3px #3278d43d}.task strong{display:block;font-size:14px}.task .meta{display:block;margin-top:7px;color:#aebed8;font-size:12px}.task .detail{display:none;margin-top:10px;border-top:1px solid #354561;padding-top:9px;color:#c7d3e8;font-size:12px;line-height:1.6}.task[aria-expanded=true] .detail{display:block}
-.badge{display:inline-block;border-radius:5px;padding:3px 6px;font-size:10px;font-weight:700;margin-top:9px}.ok{background:#173e31;color:#9ce2b8}.working{background:#4a321c;color:#ffd193}.waiting{background:#2a3449;color:#c1cde4}.unknown{background:#3b3342;color:#dbcbe1}
-.gate{margin-top:24px;padding:18px;border-radius:14px;border:1px dashed #687693;background:#141a27;color:#d3deef}.gate strong{display:block;margin-bottom:7px}.legend{margin-top:28px;font-size:13px;color:#9fb0ca}.legend b{color:#dce6f7}.note{margin-top:30px;padding-top:16px;border-top:1px solid #2c3852;color:#94a5c1;font-size:12px}
-@media(max-width:900px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:620px){.flow{grid-template-columns:1fr}.stage{padding:16px}.summary{margin:20px 0 24px}}
-</style>
-</head>
-<body><main>
-<div class="eyebrow">OpenClaw · classroom example</div>
-<h1>한 목표, 여러 전문 작업, 한 명의 최종 책임자</h1>
-<p class="intro">가상의 상품 상세페이지 프로젝트입니다. 작업을 마쳤다는 보고와 독립 검수 통과, 총괄 통합을 분리해 읽습니다. 카드를 눌러 완료 근거와 다음 행동을 확인해 보세요.</p>
-<div class="summary" aria-label="프로젝트 상태"><span class="pill">프로젝트 · 상세페이지 공개</span><span class="pill">총괄 · Coordinator</span><span class="pill">현재 · 전문 작업 진행</span><span class="pill">외부 게시 · 승인 전</span></div>
-<section class="flow" aria-label="프로젝트 작업 흐름">
-<div class="stage"><div class="step">01 · SOURCE</div><h2>근거 조사</h2><small>선행 작업 A</small>
-<button class="task" aria-expanded="false"><strong>A · 제품 사실 조사</strong><span class="meta">Researcher · 근거 v1</span><span class="badge ok">검수 통과</span><span class="detail">가격과 기능 근거가 기록됐습니다. B/C가 이 버전을 사용합니다.</span></button></div>
-<div class="stage"><div class="step">02 · PARALLEL</div><h2>병렬 전문 작업</h2><small>A의 검수 통과 후 착수</small>
-<button class="task" aria-expanded="false"><strong>B · 상세 문구</strong><span class="meta">Writer · 작업 중</span><span class="badge working">진행</span><span class="detail">주장을 제품 근거와 대조해야 합니다. 제출 후 별도 검수를 받습니다.</span></button>
-<button class="task" aria-expanded="false"><strong>C · 모바일 디자인</strong><span class="meta">Designer · 작업 중</span><span class="badge working">진행</span><span class="detail">320px 화면에서 정보 순서와 가독성을 확인합니다.</span></button></div>
-<div class="stage"><div class="step">03 · ASSEMBLE</div><h2>조립과 독립 QA</h2><small>B/C 통과 전 조립하지 않음</small>
-<button class="task" aria-expanded="false"><strong>D · 페이지 조립</strong><span class="meta">Builder · B/C 대기</span><span class="badge waiting">선행 대기</span><span class="detail">문구와 디자인의 승인 버전을 입력으로 사용합니다.</span></button>
-<button class="task" aria-expanded="false"><strong>E · 독립 QA</strong><span class="meta">Reviewer · D 대기</span><span class="badge waiting">선행 대기</span><span class="detail">가격·주장·모바일·링크를 독립 검증합니다.</span></button></div>
-<div class="stage"><div class="step">04 · RELEASE</div><h2>총괄 통합·전달</h2><small>QA 근거와 사용자 승인 필요</small>
-<button class="task" aria-expanded="false"><strong>최종 통합</strong><span class="meta">Coordinator · 아직 제출 전</span><span class="badge unknown">검증 미기록</span><span class="detail">필수 작업의 승인 산출물을 결합해 확인한 뒤 승인 요청을 올립니다.</span></button></div>
-</section>
-<div class="gate"><strong>반려가 생기면?</strong>QA가 가격 근거 오류를 찾으면 B를 재작업하고, B의 이전 버전을 사용한 D/E 결과도 다시 확인합니다. <b>작업 카드의 ‘완료’만으로 게시하지 않습니다.</b></div>
-<p class="legend"><b>화면 읽는 법:</b> 녹색은 근거가 있는 검수 통과, 주황은 진행, 회색은 선행 대기·미기록입니다. 이 데모의 의존성은 가상 데이터에 명시돼 있지만, 실제 대시보드에서는 기록 없는 관계를 추측해 그리지 않습니다.</p>
-<p class="note">모든 이름·프로젝트·자료는 가상 실습 데이터입니다. 이 파일은 외부 API 요청 없이 브라우저에서 열립니다.</p>
-</main><script>document.querySelectorAll('.task').forEach(button=>button.addEventListener('click',()=>button.setAttribute('aria-expanded',button.getAttribute('aria-expanded')==='true'?'false':'true')))</script></body>
-</html>
+:root{font:16px system-ui,sans-serif;color:#eaf0fb;background:#101722}*{box-sizing:border-box}body{margin:0}main{max-width:1050px;margin:auto;padding:24px}h1{line-height:1.2}p{line-height:1.6;color:#bac9df}button{font:inherit;color:inherit;cursor:pointer}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}.tabs button{border:1px solid #526b88;background:#24354b;border-radius:8px;padding:10px}.tabs button[aria-pressed=true]{background:#496f9d}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.card{border:1px solid #41536d;background:#1b2737;border-radius:12px;padding:15px}.card h2{font-size:18px;margin:0 0 7px}.meta{color:#aebfd5;font-size:13px}.badge{display:inline-block;margin:10px 0;padding:4px 7px;border-radius:5px;background:#3b4555}.pass{background:#205843}.warn{background:#684d22}.stale{background:#6e3a3a}.gate{border:1px dashed #788ba7;padding:16px;border-radius:10px;margin-top:20px}code{word-break:break-all}a{color:#a9d0ff}@media(max-width:500px){main{padding:18px}}
+</style></head><body><main><small>FICTIONAL DATA · READ-ONLY</small><h1>에이전트 오케스트레이션 실습</h1><p>같은 JSON에서 작업·검수·실행 흔적을 그립니다. 임시 자식 세션은 실행 기록이며, 작업의 최종 책임자나 QA 판정이 아닙니다. 실제 게시 없이 미리보기 통합까지만 진행합니다.</p><nav class="tabs" id="tabs" aria-label="시나리오 단계"></nav><p id="summary" role="status"></p><section id="tasks" class="grid" aria-label="작업"></section><section class="gate" id="gate"></section><h2>보존된 사건 이력</h2><ul id="history"></ul><p><a href="../examples/product-page/scenario.json">근거 JSON 열기</a></p><p>로컬 파일 열기에서는 fetch가 차단될 수 있습니다. 저장소 루트에서 <code>python3 -m http.server 8765</code> 후 <code>http://localhost:8765/dashboard/demo.html</code>로 접속하세요.</p></main>
+<script type="module">
+const tabs=document.querySelector('#tabs'),tasks=document.querySelector('#tasks'),summary=document.querySelector('#summary'),gate=document.querySelector('#gate'),history=document.querySelector('#history');
+function node(tag,content,cls){const n=document.createElement(tag);n.textContent=content;if(cls)n.className=cls;return n;}
+try{
+ const response=await fetch('../examples/product-page/scenario.json');if(!response.ok)throw new Error('JSON HTTP '+response.status);
+ const {snapshots}=await response.json();
+ function render(index){const {label,run}=snapshots[index];tabs.querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===index)));
+  summary.textContent=label+' · '+run.runId+' · 상태: '+run.state;
+  tasks.replaceChildren();for(const t of run.tasks){const card=node('article','', 'card');card.append(node('h2',t.taskId+' · '+t.objective),node('div','책임: '+t.ownerId+' · 선행: '+(t.dependsOn.join(', ')||'없음'),'meta'));
+   const latest=run.reviews.filter(r=>r.taskId===t.taskId&&r.artifactVersion===t.artifact?.version).sort((a,b)=>String(a.reviewedAt).localeCompare(String(b.reviewedAt))).at(-1);
+   const dependenciesCurrent=t.dependsOn.every(id=>{const upstream=run.tasks.find(x=>x.taskId===id);return upstream?.state==='accepted'&&t.inputVersions?.[id]===upstream.artifact?.version});
+   const review=dependenciesCurrent&&latest?.decision==='pass'&&latest.reviewerId!==t.ownerId&&latest.evidenceRefs?.length&&t.acceptanceCriteria.every(c=>latest.criteriaResults?.some(x=>x.criterion===c&&x.pass&&x.evidenceRef))?latest:null;
+   const label=t.state==='accepted'&&review?'검수 통과':t.state==='stale'?'무효화/재검토':t.state==='working'?'실행 중':t.state==='planned'?'선행 대기':t.state;
+   card.append(node('span',label,'badge '+(review&&t.state==='accepted'?'pass':t.state==='stale'?'stale':t.state==='working'?'warn':'')));
+   card.append(node('p','산출물: '+(t.artifact?.version||'미제출')+' · 검수: '+(review?.reviewId||'현재 통과 근거 없음')));
+   const ex=run.executions.filter(e=>e.taskId===t.taskId);if(ex.length)card.append(node('p','임시 실행: '+ex.map(e=>e.childSessionKey+' ('+e.state+')').join(', ')));
+   tasks.append(card);
+  }
+  gate.textContent=run.integration?.decision==='pass'?'총괄 통합: '+run.integration.integrationId+' · 사용자 게시 승인 대기 · 실제 전달 없음':'총괄 통합: 미완료 · 승인/실제 전달 없음';
+  history.replaceChildren(...(run.history||[]).map(event=>node('li',event.type+' · '+(event.ref||event.refs?.join(', ')||''))));
+ }
+ snapshots.forEach((s,i)=>{const b=node('button',s.label);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>render(i));tabs.append(b);});render(0);
+}catch(error){summary.textContent='예제 JSON을 읽지 못했습니다: '+error.message;}
+</script></body></html>

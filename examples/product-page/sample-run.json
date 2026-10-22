@@ -1,70 +1,165 @@
 {
-  "runId": "demo-product-page-001",
+  "runId": "demo-run-001",
   "projectId": "demo-product-page",
-  "goal": "승인 후 모바일 상품 상세페이지 공개",
-  "coordinatorAgentId": "coordinator",
+  "sourceRef": "classroom://lesson-1/request-1",
+  "requestDedupKey": "demo-intent-001",
+  "goal": "가상 상품 상세페이지 미리보기 검증",
+  "mode": "manual",
+  "coordinatorId": "coordinator",
   "state": "active",
+  "stateVersion": 1,
+  "createdAt": "2026-01-01T00:00:00Z",
+  "updatedAt": "2026-01-01T00:00:00Z",
   "acceptanceCriteria": [
-    "가격과 제품 주장의 근거 확인",
-    "모바일 320px 표시 확인",
-    "사용자 승인 후 게시"
+    "가상 가격·주장 근거 일치",
+    "320px 화면 가독성",
+    "미리보기 링크 확인"
   ],
+  "approval": {
+    "requiredFor": "publication",
+    "status": "not_requested"
+  },
+  "delivery": null,
+  "integration": null,
   "tasks": [
     {
       "taskId": "A",
-      "workType": "research",
-      "ownerAgentId": "researcher",
+      "ownerId": "researcher",
+      "reviewerId": "qa",
+      "objective": "가상 제품 사실 조사",
       "dependsOn": [],
+      "acceptanceCriteria": [
+        "가격과 주장 근거 기록"
+      ],
       "state": "accepted",
-      "objective": "제품 사실·가격 조사",
-      "artifactRefs": [
-        "demo://facts-v1"
-      ]
+      "stateVersion": 2,
+      "artifact": {
+        "artifactId": "facts",
+        "version": "v1",
+        "location": "demo://facts-v1",
+        "producerId": "researcher",
+        "submittedAt": "2026-01-01T00:00:00Z",
+        "evidenceRefs": [
+          "demo://source-a"
+        ],
+        "residualRisks": []
+      },
+      "inputVersions": {}
     },
     {
       "taskId": "B",
-      "workType": "writing",
-      "ownerAgentId": "writer",
+      "ownerId": "writer",
+      "reviewerId": "qa",
+      "objective": "상세 문구",
       "dependsOn": [
         "A"
       ],
+      "acceptanceCriteria": [
+        "가격·주장이 A 근거와 일치"
+      ],
       "state": "working",
-      "objective": "근거 기반 상세 문구",
-      "artifactRefs": []
+      "stateVersion": 1,
+      "artifact": null,
+      "inputVersions": {
+        "A": "v1"
+      }
     },
     {
       "taskId": "C",
-      "workType": "design",
-      "ownerAgentId": "designer",
+      "ownerId": "designer",
+      "reviewerId": "qa",
+      "objective": "320px 디자인",
       "dependsOn": [
         "A"
       ],
+      "acceptanceCriteria": [
+        "320px 가독성 확인"
+      ],
       "state": "working",
-      "objective": "모바일 시각 디자인",
-      "artifactRefs": []
+      "stateVersion": 1,
+      "artifact": null,
+      "inputVersions": {
+        "A": "v1"
+      }
     },
     {
       "taskId": "D",
-      "workType": "coding",
-      "ownerAgentId": "builder",
+      "ownerId": "builder",
+      "reviewerId": "qa",
+      "objective": "미리보기 조립",
       "dependsOn": [
         "B",
         "C"
       ],
+      "acceptanceCriteria": [
+        "최신 B/C 반영"
+      ],
       "state": "planned",
-      "objective": "상세페이지 조립",
-      "artifactRefs": []
+      "stateVersion": 1,
+      "artifact": null,
+      "inputVersions": {}
     },
     {
       "taskId": "E",
-      "workType": "qa",
-      "ownerAgentId": "reviewer",
+      "ownerId": "tester",
+      "reviewerId": "qa",
+      "objective": "독립 기능 점검",
       "dependsOn": [
         "D"
       ],
+      "acceptanceCriteria": [
+        "가격·모바일·링크 확인"
+      ],
       "state": "planned",
-      "objective": "가격·모바일·링크 독립 QA",
-      "artifactRefs": []
+      "stateVersion": 1,
+      "artifact": null,
+      "inputVersions": {}
+    }
+  ],
+  "reviews": [
+    {
+      "reviewId": "review-A-v1",
+      "taskId": "A",
+      "artifactVersion": "v1",
+      "reviewerId": "qa",
+      "decision": "pass",
+      "criteriaResults": [
+        {
+          "criterion": "가격과 주장 근거 기록",
+          "pass": true,
+          "evidenceRef": "demo://review-a"
+        }
+      ],
+      "evidenceRefs": [
+        "demo://review-a"
+      ],
+      "reviewedAt": "2026-01-01T00:00:00Z"
+    }
+  ],
+  "executions": [
+    {
+      "executionId": "exec-B-1",
+      "taskId": "B",
+      "runtime": "openclaw",
+      "runtimeNamespace": "demo",
+      "runtimeRunId": "child-run-B",
+      "childSessionKey": "child-session-B",
+      "parentSessionKey": "coordinator-session",
+      "attempt": 1,
+      "state": "started",
+      "startedAt": "2026-01-01T00:01:00Z"
+    },
+    {
+      "executionId": "exec-C-1",
+      "taskId": "C",
+      "runtime": "openclaw",
+      "runtimeNamespace": "demo",
+      "runtimeRunId": "child-run-C",
+      "childSessionKey": "child-session-C",
+      "parentSessionKey": "coordinator-session",
+      "attempt": 1,
+      "state": "started",
+      "startedAt": "2026-01-01T00:01:00Z"
     }
   ]
 }

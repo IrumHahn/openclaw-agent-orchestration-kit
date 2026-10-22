@@ -9,14 +9,21 @@
 - [스킬](skill/agent-orchestration/SKILL.md) — 복합 요청 접수 → 작업 분해 → 실제 위임 → 독립 QA → 통합·전달 확인.
 - [구조 설계](docs/architecture.md) — 상태·데이터 계약·권한 경계·실패 복구·단계별 도입.
 - [임시 서브에이전트 설계](docs/subagent-runtime.md) — OpenClaw 자식 세션·중첩 실행·검수·실패 복구를 작업 원장에 연결하는 계약. 현재 구현 완료를 뜻하지 않습니다.
-- [가상 실습 데이터](examples/product-page/sample-run.json) — 제품 상세페이지 작업의 DAG 예시.
+- [가상 실습 데이터](examples/product-page/scenario.json) — 실제 근거가 붙은 세 단계 스냅샷과 검증기.
 - [수업 교안](docs/classroom-guide.md) — 진행 흐름, 시연, 과제, 평가 기준.
 - [시각화 예시](dashboard/) — 프로젝트별 흐름 화면과 데이터 연결 가이드.
 
-## 5분 시작
+## 시작 경로
 
 1. OpenClaw에서 사용할 총괄 에이전트와 전문 에이전트의 역할·권한을 정합니다. 전담 인원이 적으면 한 에이전트가 여러 역할을 맡아도 되지만, 고위험 작업은 독립 검수자를 확보합니다.
-2. 이 저장소를 내려받아 `skill/agent-orchestration` 폴더를 자신이 관리하는 OpenClaw 스킬 경로(예: `~/.openclaw/skills/`)에 복사합니다. 새 세션에서 스킬 목록에 표시되는지 확인합니다.
+2. OpenClaw 연동을 원하면 저장소 루트에서 아래 명령으로 `skill/agent-orchestration` 폴더 **전체**를 복사합니다. 새 OpenClaw 세션에서 “agent-orchestration 스킬이 보이는지 알려줘”라고 물어 이름과 설명이 인식되는지 확인합니다. 오프라인 수업만 진행한다면 이 설치는 필요 없습니다.
+
+```sh
+mkdir -p ~/.openclaw/skills
+cp -R skill/agent-orchestration ~/.openclaw/skills/
+```
+
+`references/`와 `examples/`를 함께 복사해야 독립 설치가 됩니다. 기존 같은 이름의 폴더가 있다면 덮어쓰기 전에 백업하고 차이를 확인하세요.
 3. 한 개의 작업 원장(프로젝트/태스크 저장소)을 정합니다. OpenClaw 자체 세션·자동화 기록과 작업 카드가 다르면, 둘 중 무엇이 최종 상태의 권위 있는 기록인지 먼저 정합니다.
 4. 총괄 에이전트에게 아래 요청을 전달합니다.
 
@@ -30,7 +37,11 @@
 작업 카드만 만들지 말고 담당자가 실제로 시작했는지, 제출물이 검수됐는지 확인해.
 ```
 
-5. [가상 실습](examples/product-page/sample-run.json)으로 먼저 전체 흐름을 연습합니다. 외부 발송이나 실제 고객 데이터를 사용하지 않습니다.
+5. [가상 실습](examples/product-page/scenario.json)으로 먼저 전체 흐름을 연습합니다. 오프라인 경로는 Node.js와 브라우저만 필요합니다. OpenClaw 연동 경로는 위 스킬 설치와 현재 환경의 실행 도구를 추가로 확인합니다. 외부 발송이나 실제 고객 데이터를 사용하지 않습니다.
+
+저장소 루트에서 `node scripts/validate-run.mjs examples/product-page/sample-run.json examples/product-page/scenario.json`과 `node --test scripts/validate-run.test.mjs dashboard/flow-model.test.mjs`로 샘플을 검증할 수 있습니다. 시각 데모는 `python3 -m http.server 8765` 실행 후 `http://localhost:8765/dashboard/demo.html`로 엽니다. 스킬만 복사한 설치에는 데모·검증기가 포함되지 않습니다.
+
+운영 수준은 **설계 → 수동 원장 → 실제 위임 접수증 → 독립 QA/재작업 → 선택적 저장소·화면 연동 → 자동 제어면** 순서로 높입니다. 설치만으로 자동 DAG·OpenClaw 훅·검수 권한이 생겼다고 설명하지 않습니다.
 
 ## 상태의 뜻
 
@@ -39,7 +50,7 @@
 - **제출**: 담당자가 작업을 끝냈다고 보고한 상태.
 - **검수 통과**: 완료 기준과 증거를 독립적으로 확인한 상태.
 - **통합 완료**: 총괄이 여러 결과를 결합하고 전체 동작을 확인한 상태.
-- **전달 완료**: 사용자가 볼 수 있는 화면·메시지·게시물에 실제 반영된 상태.
+- **전달 완료**: 사용자가 볼 수 있는 화면·메시지·게시물에 실제 반영되고 영수증/관찰로 확인된 상태. 수업 데모에는 해당하지 않습니다.
 
 검수 증거가 없는 기존 작업 `done`은 자동으로 통합 완료로 승격하지 않습니다.
 
