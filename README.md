@@ -8,6 +8,7 @@
 
 - [스킬](skill/agent-orchestration/SKILL.md) — 복합 요청 접수 → 작업 분해 → 실제 위임 → 독립 QA → 통합·전달 확인.
 - [구조 설계](docs/architecture.md) — 상태·데이터 계약·권한 경계·실패 복구·단계별 도입.
+- [임시 서브에이전트 설계](docs/subagent-runtime.md) — OpenClaw 자식 세션·중첩 실행·검수·실패 복구를 작업 원장에 연결하는 계약. 현재 구현 완료를 뜻하지 않습니다.
 - [가상 실습 데이터](examples/product-page/sample-run.json) — 제품 상세페이지 작업의 DAG 예시.
 - [수업 교안](docs/classroom-guide.md) — 진행 흐름, 시연, 과제, 평가 기준.
 - [시각화 예시](dashboard/) — 프로젝트별 흐름 화면과 데이터 연결 가이드.
