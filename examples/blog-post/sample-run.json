@@ -1,0 +1,168 @@
+{
+  "runId": "blog-run-001",
+  "projectId": "weekly-blog",
+  "sourceRef": "telegram://owner/2026-11-16/msg-12",
+  "requestDedupKey": "blog-2026-w46-ai-office",
+  "goal": "\"내 AI 오피스 1주차 후기\" 블로그 글 1편을 발행 승인 직전 상태까지 완성",
+  "mode": "manual",
+  "coordinatorId": "mira",
+  "state": "active",
+  "stateVersion": 1,
+  "createdAt": "2026-11-16T09:00:00Z",
+  "updatedAt": "2026-11-16T09:00:00Z",
+  "acceptanceCriteria": [
+    "본문의 모든 수치·인용에 출처 링크가 있고 링크가 열린다",
+    "대표 이미지 1장 + 본문 이미지 2장이 1200px 기준으로 깨지지 않는다",
+    "네이버 블로그 에디터에 붙여넣은 미리보기에서 제목·소제목·이미지 순서가 맞다"
+  ],
+  "approval": {
+    "requiredFor": "publication",
+    "status": "not_requested"
+  },
+  "delivery": null,
+  "integration": null,
+  "tasks": [
+    {
+      "taskId": "A",
+      "ownerId": "researcher",
+      "reviewerId": "qa",
+      "objective": "주제 조사: 수강생 후기 3건·공식 문서 2건 인용 후보 수집",
+      "dependsOn": [],
+      "acceptanceCriteria": [
+        "인용 후보마다 URL·접속 확인 시각 기록"
+      ],
+      "state": "accepted",
+      "stateVersion": 2,
+      "artifact": {
+        "artifactId": "sources",
+        "version": "v1",
+        "location": "canvas://blog/sources-v1.md",
+        "producerId": "researcher",
+        "submittedAt": "2026-11-16T09:00:00Z",
+        "evidenceRefs": [
+          "canvas://blog/sources-v1-linkcheck.txt"
+        ],
+        "residualRisks": []
+      },
+      "inputVersions": {}
+    },
+    {
+      "taskId": "B",
+      "ownerId": "writer",
+      "reviewerId": "qa",
+      "objective": "초안 작성 (1,500자, 소제목 4개)",
+      "dependsOn": [
+        "A"
+      ],
+      "acceptanceCriteria": [
+        "A 의 출처만 인용",
+        "소제목 4개·1,300~1,700자"
+      ],
+      "state": "working",
+      "stateVersion": 1,
+      "artifact": null,
+      "inputVersions": {
+        "A": "v1"
+      }
+    },
+    {
+      "taskId": "C",
+      "ownerId": "designer",
+      "reviewerId": "qa",
+      "objective": "대표 이미지 1 + 본문 이미지 2 제작",
+      "dependsOn": [
+        "A"
+      ],
+      "acceptanceCriteria": [
+        "1200px 폭에서 글자 깨짐 없음",
+        "출처가 필요한 이미지는 A 에 기록된 것만"
+      ],
+      "state": "working",
+      "stateVersion": 1,
+      "artifact": null,
+      "inputVersions": {
+        "A": "v1"
+      }
+    },
+    {
+      "taskId": "D",
+      "ownerId": "mira",
+      "reviewerId": "qa",
+      "objective": "글+이미지 조립, 네이버 에디터 미리보기 생성",
+      "dependsOn": [
+        "B",
+        "C"
+      ],
+      "acceptanceCriteria": [
+        "최신 B/C 버전 반영",
+        "미리보기 캡처 저장"
+      ],
+      "state": "planned",
+      "stateVersion": 1,
+      "artifact": null,
+      "inputVersions": {}
+    },
+    {
+      "taskId": "E",
+      "ownerId": "qa",
+      "reviewerId": "codex-hand",
+      "objective": "독립 검수: 링크 전수 클릭·이미지·순서 확인",
+      "dependsOn": [
+        "D"
+      ],
+      "acceptanceCriteria": [
+        "3개 완료 기준 각각 증거 캡처"
+      ],
+      "state": "planned",
+      "stateVersion": 1,
+      "artifact": null,
+      "inputVersions": {}
+    }
+  ],
+  "reviews": [
+    {
+      "reviewId": "review-A-v1",
+      "taskId": "A",
+      "artifactVersion": "v1",
+      "reviewerId": "qa",
+      "decision": "pass",
+      "criteriaResults": [
+        {
+          "criterion": "인용 후보마다 URL·접속 확인 시각 기록",
+          "pass": true,
+          "evidenceRef": "canvas://blog/sources-v1-linkcheck.txt"
+        }
+      ],
+      "evidenceRefs": [
+        "canvas://blog/sources-v1-linkcheck.txt"
+      ],
+      "reviewedAt": "2026-11-16T09:00:00Z"
+    }
+  ],
+  "executions": [
+    {
+      "executionId": "exec-B-1",
+      "taskId": "B",
+      "runtime": "openclaw",
+      "runtimeNamespace": "vps-main",
+      "runtimeRunId": "run-b-1",
+      "childSessionKey": "sess-writer-1",
+      "parentSessionKey": "sess-mira",
+      "attempt": 1,
+      "state": "started",
+      "startedAt": "2026-11-16T09:02:00Z"
+    },
+    {
+      "executionId": "exec-C-1",
+      "taskId": "C",
+      "runtime": "openclaw",
+      "runtimeNamespace": "vps-main",
+      "runtimeRunId": "run-c-1",
+      "childSessionKey": "sess-designer-1",
+      "parentSessionKey": "sess-mira",
+      "attempt": 1,
+      "state": "started",
+      "startedAt": "2026-11-16T09:02:00Z"
+    }
+  ]
+}

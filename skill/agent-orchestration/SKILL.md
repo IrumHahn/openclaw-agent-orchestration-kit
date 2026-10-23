@@ -1,9 +1,24 @@
 ---
 name: agent-orchestration
-description: "Design, run, or audit a multi-agent project with explicit dependencies, ephemeral subagent traces, independent review, recovery, and verified delivery. Use for complex cross-specialty work or when asked to design an orchestration structure; not for a single low-risk step."
+description: "Design, run, or audit a multi-agent project with explicit dependencies, ephemeral subagent traces, independent review, recovery, and verified delivery. Use for complex cross-specialty work, when asked to design an orchestration structure, or when the user says 팀으로 프로젝트 진행해줘 / 역할 나눠서 해줘 / 검수까지 해서 완성해줘 / Lite 모드로 진행해줘. Not for a single low-risk step."
 ---
 
 # Agent Orchestration
+
+## 먼저 읽기 — 모드 고르기 (한국어 요약)
+
+이 스킬은 **일하는 순서**이지 자동화 서버가 아니다. 설치해도 작업 큐·자동 배정·검수 게이트가 생기지 않는다. 사용자 환경에서 확인된 기능만 쓴다. 처음이면 **Lite** 로 시작한다.
+
+| 모드 | 언제 | 기록 | 사용자에게 하는 말 |
+|---|---|---|---|
+| **Lite** (= Manual, 원장 1장) | 수강생·첫 프로젝트·팀 4명 이하 | [`references/ledger-template.md`](references/ledger-template.md) 를 `runs/<날짜>-<이름>.md` 로 복사해 채운다 | "원장을 만들었습니다. 작업표를 확인해 주세요." |
+| Design | 실행 없이 구조만 | 작업표 + 연결해야 할 도구 목록 | "계획만 세웠고 에이전트는 시작하지 않았습니다." |
+| Instrumented | 작업 저장소·훅이 검증된 환경 | JSON 런 레코드 + 검증기 | 실제로 검증된 기능만 주장 |
+| Audit | 이미 돌아간 프로젝트 점검 | 기존 기록을 읽고 빠진 증거 표시 | 옛 "done" 을 통과로 승격하지 않는다 |
+
+**Lite 절차 (5단계)**: ① 목표·완료 기준 2~4개·허용 범위를 원장 맨 위에 쓴다 → ② 작업표에 ID·담당·선행·검수자를 채우고 사용자 확인 → ③ 선행 없는 작업만 시작, 제출물에 **버전**을 붙여 검수자(담당과 다른 에이전트)에게 → ④ 기준별 통과/반려 + 근거 위치 기록, 반려면 새 버전, 그걸 쓴 하류는 stale → ⑤ 전부 통과하면 총괄이 통합·전체 점검, **발행·발송·결제는 사용자 승인 + 영수증 뒤에만 "전달 완료"**. 각 단계의 상세 규칙은 아래 영어 본문 1~7절과 같다. 예제: [`examples/blog-post`](../../examples/blog-post/README.md)(저장소), [`examples/product-page.md`](examples/product-page.md)(스킬 내).
+
+---
 
 This skill is an operational method, not an orchestration server. Installing it does not add a database, hooks, automatic dispatch, access controls, or a dashboard. Use only capabilities verified in the current environment.
 
@@ -64,6 +79,7 @@ Report outcome, evidence, residual risks, owner, and resume trigger. Distinguish
 
 - [Portable contract](references/contract.md): IDs, states, gates, evidence invariants.
 - [Runtime adapters](references/runtime.md): OpenClaw hook/manual modes and recovery.
+- [Ledger template](references/ledger-template.md): one-table manual run record for Lite/Manual mode.
 - [Classroom example](examples/product-page.md): fictional preview-only exercise.
 
 These resources are inside this folder and remain valid when the skill is installed alone. The repository adds a validator, worked data, and optional visual demo.

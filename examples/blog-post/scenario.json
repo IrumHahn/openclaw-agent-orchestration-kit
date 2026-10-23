@@ -1,0 +1,1005 @@
+{
+  "schemaVersion": 1,
+  "snapshots": [
+    {
+      "id": "active",
+      "label": "A 조사 검수 후 B 초안 · C 이미지 병렬 시작",
+      "run": {
+        "runId": "blog-run-001",
+        "projectId": "weekly-blog",
+        "sourceRef": "telegram://owner/2026-11-16/msg-12",
+        "requestDedupKey": "blog-2026-w46-ai-office",
+        "goal": "\"내 AI 오피스 1주차 후기\" 블로그 글 1편을 발행 승인 직전 상태까지 완성",
+        "mode": "manual",
+        "coordinatorId": "mira",
+        "state": "active",
+        "stateVersion": 1,
+        "createdAt": "2026-11-16T09:00:00Z",
+        "updatedAt": "2026-11-16T09:00:00Z",
+        "acceptanceCriteria": [
+          "본문의 모든 수치·인용에 출처 링크가 있고 링크가 열린다",
+          "대표 이미지 1장 + 본문 이미지 2장이 1200px 기준으로 깨지지 않는다",
+          "네이버 블로그 에디터에 붙여넣은 미리보기에서 제목·소제목·이미지 순서가 맞다"
+        ],
+        "approval": {
+          "requiredFor": "publication",
+          "status": "not_requested"
+        },
+        "delivery": null,
+        "integration": null,
+        "tasks": [
+          {
+            "taskId": "A",
+            "ownerId": "researcher",
+            "reviewerId": "qa",
+            "objective": "주제 조사: 수강생 후기 3건·공식 문서 2건 인용 후보 수집",
+            "dependsOn": [],
+            "acceptanceCriteria": [
+              "인용 후보마다 URL·접속 확인 시각 기록"
+            ],
+            "state": "accepted",
+            "stateVersion": 2,
+            "artifact": {
+              "artifactId": "sources",
+              "version": "v1",
+              "location": "canvas://blog/sources-v1.md",
+              "producerId": "researcher",
+              "submittedAt": "2026-11-16T09:00:00Z",
+              "evidenceRefs": [
+                "canvas://blog/sources-v1-linkcheck.txt"
+              ],
+              "residualRisks": []
+            },
+            "inputVersions": {}
+          },
+          {
+            "taskId": "B",
+            "ownerId": "writer",
+            "reviewerId": "qa",
+            "objective": "초안 작성 (1,500자, 소제목 4개)",
+            "dependsOn": [
+              "A"
+            ],
+            "acceptanceCriteria": [
+              "A 의 출처만 인용",
+              "소제목 4개·1,300~1,700자"
+            ],
+            "state": "working",
+            "stateVersion": 1,
+            "artifact": null,
+            "inputVersions": {
+              "A": "v1"
+            }
+          },
+          {
+            "taskId": "C",
+            "ownerId": "designer",
+            "reviewerId": "qa",
+            "objective": "대표 이미지 1 + 본문 이미지 2 제작",
+            "dependsOn": [
+              "A"
+            ],
+            "acceptanceCriteria": [
+              "1200px 폭에서 글자 깨짐 없음",
+              "출처가 필요한 이미지는 A 에 기록된 것만"
+            ],
+            "state": "working",
+            "stateVersion": 1,
+            "artifact": null,
+            "inputVersions": {
+              "A": "v1"
+            }
+          },
+          {
+            "taskId": "D",
+            "ownerId": "mira",
+            "reviewerId": "qa",
+            "objective": "글+이미지 조립, 네이버 에디터 미리보기 생성",
+            "dependsOn": [
+              "B",
+              "C"
+            ],
+            "acceptanceCriteria": [
+              "최신 B/C 버전 반영",
+              "미리보기 캡처 저장"
+            ],
+            "state": "planned",
+            "stateVersion": 1,
+            "artifact": null,
+            "inputVersions": {}
+          },
+          {
+            "taskId": "E",
+            "ownerId": "qa",
+            "reviewerId": "codex-hand",
+            "objective": "독립 검수: 링크 전수 클릭·이미지·순서 확인",
+            "dependsOn": [
+              "D"
+            ],
+            "acceptanceCriteria": [
+              "3개 완료 기준 각각 증거 캡처"
+            ],
+            "state": "planned",
+            "stateVersion": 1,
+            "artifact": null,
+            "inputVersions": {}
+          }
+        ],
+        "reviews": [
+          {
+            "reviewId": "review-A-v1",
+            "taskId": "A",
+            "artifactVersion": "v1",
+            "reviewerId": "qa",
+            "decision": "pass",
+            "criteriaResults": [
+              {
+                "criterion": "인용 후보마다 URL·접속 확인 시각 기록",
+                "pass": true,
+                "evidenceRef": "canvas://blog/sources-v1-linkcheck.txt"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/sources-v1-linkcheck.txt"
+            ],
+            "reviewedAt": "2026-11-16T09:00:00Z"
+          }
+        ],
+        "executions": [
+          {
+            "executionId": "exec-B-1",
+            "taskId": "B",
+            "runtime": "openclaw",
+            "runtimeNamespace": "vps-main",
+            "runtimeRunId": "run-b-1",
+            "childSessionKey": "sess-writer-1",
+            "parentSessionKey": "sess-mira",
+            "attempt": 1,
+            "state": "started",
+            "startedAt": "2026-11-16T09:02:00Z"
+          },
+          {
+            "executionId": "exec-C-1",
+            "taskId": "C",
+            "runtime": "openclaw",
+            "runtimeNamespace": "vps-main",
+            "runtimeRunId": "run-c-1",
+            "childSessionKey": "sess-designer-1",
+            "parentSessionKey": "sess-mira",
+            "attempt": 1,
+            "state": "started",
+            "startedAt": "2026-11-16T09:02:00Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rework",
+      "label": "E 검수에서 출처 링크 404 발견 → B 반려, D/E 무효화",
+      "run": {
+        "runId": "blog-run-001",
+        "projectId": "weekly-blog",
+        "sourceRef": "telegram://owner/2026-11-16/msg-12",
+        "requestDedupKey": "blog-2026-w46-ai-office",
+        "goal": "\"내 AI 오피스 1주차 후기\" 블로그 글 1편을 발행 승인 직전 상태까지 완성",
+        "mode": "manual",
+        "coordinatorId": "mira",
+        "state": "active",
+        "stateVersion": 2,
+        "createdAt": "2026-11-16T09:00:00Z",
+        "updatedAt": "2026-11-16T09:00:00Z",
+        "acceptanceCriteria": [
+          "본문의 모든 수치·인용에 출처 링크가 있고 링크가 열린다",
+          "대표 이미지 1장 + 본문 이미지 2장이 1200px 기준으로 깨지지 않는다",
+          "네이버 블로그 에디터에 붙여넣은 미리보기에서 제목·소제목·이미지 순서가 맞다"
+        ],
+        "approval": {
+          "requiredFor": "publication",
+          "status": "not_requested"
+        },
+        "delivery": null,
+        "integration": null,
+        "tasks": [
+          {
+            "taskId": "A",
+            "ownerId": "researcher",
+            "reviewerId": "qa",
+            "objective": "주제 조사: 수강생 후기 3건·공식 문서 2건 인용 후보 수집",
+            "dependsOn": [],
+            "acceptanceCriteria": [
+              "인용 후보마다 URL·접속 확인 시각 기록"
+            ],
+            "state": "accepted",
+            "stateVersion": 2,
+            "artifact": {
+              "artifactId": "sources",
+              "version": "v1",
+              "location": "canvas://blog/sources-v1.md",
+              "producerId": "researcher",
+              "submittedAt": "2026-11-16T09:00:00Z",
+              "evidenceRefs": [
+                "canvas://blog/sources-v1-linkcheck.txt"
+              ],
+              "residualRisks": []
+            },
+            "inputVersions": {}
+          },
+          {
+            "taskId": "B",
+            "ownerId": "writer",
+            "reviewerId": "qa",
+            "objective": "초안 작성 (1,500자, 소제목 4개)",
+            "dependsOn": [
+              "A"
+            ],
+            "acceptanceCriteria": [
+              "A 의 출처만 인용",
+              "소제목 4개·1,300~1,700자"
+            ],
+            "state": "working",
+            "stateVersion": 3,
+            "artifact": {
+              "artifactId": "draft",
+              "version": "v1",
+              "location": "canvas://blog/draft-v1.md",
+              "producerId": "writer",
+              "submittedAt": "2026-11-16T09:20:00Z",
+              "evidenceRefs": [
+                "canvas://blog/draft-v1-wordcount.txt"
+              ],
+              "residualRisks": [
+                "인용 3번 링크 응답 느림"
+              ]
+            },
+            "inputVersions": {
+              "A": "v1"
+            }
+          },
+          {
+            "taskId": "C",
+            "ownerId": "designer",
+            "reviewerId": "qa",
+            "objective": "대표 이미지 1 + 본문 이미지 2 제작",
+            "dependsOn": [
+              "A"
+            ],
+            "acceptanceCriteria": [
+              "1200px 폭에서 글자 깨짐 없음",
+              "출처가 필요한 이미지는 A 에 기록된 것만"
+            ],
+            "state": "accepted",
+            "stateVersion": 1,
+            "artifact": {
+              "artifactId": "images",
+              "version": "v1",
+              "location": "canvas://blog/images-v1/",
+              "producerId": "designer",
+              "submittedAt": "2026-11-16T09:25:00Z",
+              "evidenceRefs": [
+                "canvas://blog/images-v1-1200px.png"
+              ],
+              "residualRisks": []
+            },
+            "inputVersions": {
+              "A": "v1"
+            }
+          },
+          {
+            "taskId": "D",
+            "ownerId": "mira",
+            "reviewerId": "qa",
+            "objective": "글+이미지 조립, 네이버 에디터 미리보기 생성",
+            "dependsOn": [
+              "B",
+              "C"
+            ],
+            "acceptanceCriteria": [
+              "최신 B/C 버전 반영",
+              "미리보기 캡처 저장"
+            ],
+            "state": "stale",
+            "stateVersion": 1,
+            "artifact": {
+              "artifactId": "preview",
+              "version": "v1",
+              "location": "canvas://blog/preview-v1.png",
+              "producerId": "mira",
+              "submittedAt": "2026-11-16T09:40:00Z",
+              "evidenceRefs": [
+                "canvas://blog/preview-v1.png"
+              ],
+              "residualRisks": []
+            },
+            "inputVersions": {
+              "B": "v1",
+              "C": "v1"
+            }
+          },
+          {
+            "taskId": "E",
+            "ownerId": "qa",
+            "reviewerId": "codex-hand",
+            "objective": "독립 검수: 링크 전수 클릭·이미지·순서 확인",
+            "dependsOn": [
+              "D"
+            ],
+            "acceptanceCriteria": [
+              "3개 완료 기준 각각 증거 캡처"
+            ],
+            "state": "stale",
+            "stateVersion": 1,
+            "artifact": {
+              "artifactId": "qa-report",
+              "version": "v1",
+              "location": "canvas://blog/qa-v1.md",
+              "producerId": "qa",
+              "submittedAt": "2026-11-16T09:55:00Z",
+              "evidenceRefs": [
+                "canvas://blog/qa-v1-link3-404.png"
+              ],
+              "residualRisks": [
+                "인용 3번 404"
+              ]
+            },
+            "inputVersions": {
+              "D": "v1"
+            }
+          }
+        ],
+        "reviews": [
+          {
+            "reviewId": "review-A-v1",
+            "taskId": "A",
+            "artifactVersion": "v1",
+            "reviewerId": "qa",
+            "decision": "pass",
+            "criteriaResults": [
+              {
+                "criterion": "인용 후보마다 URL·접속 확인 시각 기록",
+                "pass": true,
+                "evidenceRef": "canvas://blog/sources-v1-linkcheck.txt"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/sources-v1-linkcheck.txt"
+            ],
+            "reviewedAt": "2026-11-16T09:00:00Z"
+          },
+          {
+            "reviewId": "review-B-v1-initial",
+            "taskId": "B",
+            "artifactVersion": "v1",
+            "reviewerId": "qa",
+            "decision": "pass",
+            "criteriaResults": [
+              {
+                "criterion": "A 의 출처만 인용",
+                "pass": true,
+                "evidenceRef": "canvas://blog/draft-v1-cites.txt"
+              },
+              {
+                "criterion": "소제목 4개·1,300~1,700자",
+                "pass": true,
+                "evidenceRef": "canvas://blog/draft-v1-wordcount.txt"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/draft-v1-cites.txt",
+              "canvas://blog/draft-v1-wordcount.txt"
+            ],
+            "reviewedAt": "2026-11-16T09:30:00Z"
+          },
+          {
+            "reviewId": "review-C-v1",
+            "taskId": "C",
+            "artifactVersion": "v1",
+            "reviewerId": "qa",
+            "decision": "pass",
+            "criteriaResults": [
+              {
+                "criterion": "1200px 폭에서 글자 깨짐 없음",
+                "pass": true,
+                "evidenceRef": "canvas://blog/images-v1-1200px.png"
+              },
+              {
+                "criterion": "출처가 필요한 이미지는 A 에 기록된 것만",
+                "pass": true,
+                "evidenceRef": "canvas://blog/images-v1-sources.txt"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/images-v1-1200px.png",
+              "canvas://blog/images-v1-sources.txt"
+            ],
+            "reviewedAt": "2026-11-16T09:32:00Z"
+          },
+          {
+            "reviewId": "review-D-v1-initial",
+            "taskId": "D",
+            "artifactVersion": "v1",
+            "reviewerId": "qa",
+            "decision": "pass",
+            "criteriaResults": [
+              {
+                "criterion": "최신 B/C 버전 반영",
+                "pass": true,
+                "evidenceRef": "canvas://blog/preview-v1.png"
+              },
+              {
+                "criterion": "미리보기 캡처 저장",
+                "pass": true,
+                "evidenceRef": "canvas://blog/preview-v1.png"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/preview-v1.png"
+            ],
+            "reviewedAt": "2026-11-16T09:45:00Z"
+          },
+          {
+            "reviewId": "review-B-v1-revoked",
+            "taskId": "B",
+            "artifactVersion": "v1",
+            "reviewerId": "qa",
+            "decision": "changes_requested",
+            "criteriaResults": [
+              {
+                "criterion": "A 의 출처만 인용",
+                "pass": false,
+                "evidenceRef": "canvas://blog/qa-v1-link3-404.png"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/qa-v1-link3-404.png"
+            ],
+            "reviewedAt": "2026-11-16T09:58:00Z"
+          }
+        ],
+        "executions": [
+          {
+            "executionId": "exec-B-1",
+            "taskId": "B",
+            "runtime": "openclaw",
+            "runtimeNamespace": "vps-main",
+            "runtimeRunId": "run-b-1",
+            "childSessionKey": "sess-writer-1",
+            "parentSessionKey": "sess-mira",
+            "attempt": 1,
+            "state": "exited_success",
+            "startedAt": "2026-11-16T09:02:00Z",
+            "finishedAt": "2026-11-16T09:20:00Z"
+          },
+          {
+            "executionId": "exec-C-1",
+            "taskId": "C",
+            "runtime": "openclaw",
+            "runtimeNamespace": "vps-main",
+            "runtimeRunId": "run-c-1",
+            "childSessionKey": "sess-designer-1",
+            "parentSessionKey": "sess-mira",
+            "attempt": 1,
+            "state": "exited_success",
+            "startedAt": "2026-11-16T09:02:00Z",
+            "finishedAt": "2026-11-16T09:25:00Z"
+          },
+          {
+            "executionId": "exec-D-1",
+            "taskId": "D",
+            "runtime": "manual",
+            "runtimeNamespace": "vps-main",
+            "childSessionKey": "mira-assemble-1",
+            "attempt": 1,
+            "state": "exited_success",
+            "startedAt": "2026-11-16T09:33:00Z",
+            "finishedAt": "2026-11-16T09:40:00Z"
+          }
+        ],
+        "history": [
+          {
+            "type": "review_passed",
+            "ref": "review-B-v1-initial"
+          },
+          {
+            "type": "review_passed",
+            "ref": "review-C-v1"
+          },
+          {
+            "type": "downstream_started",
+            "ref": "exec-D-1"
+          },
+          {
+            "type": "review_passed",
+            "ref": "review-D-v1-initial"
+          },
+          {
+            "type": "defect_found",
+            "ref": "canvas://blog/qa-v1-link3-404.png"
+          },
+          {
+            "type": "review_revoked",
+            "ref": "review-B-v1-revoked"
+          },
+          {
+            "type": "downstream_stale",
+            "refs": [
+              "D",
+              "E"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "integrated",
+      "label": "B v2 재작성 → D/E 재검수 → 통합, 발행 승인 대기",
+      "run": {
+        "runId": "blog-run-001",
+        "projectId": "weekly-blog",
+        "sourceRef": "telegram://owner/2026-11-16/msg-12",
+        "requestDedupKey": "blog-2026-w46-ai-office",
+        "goal": "\"내 AI 오피스 1주차 후기\" 블로그 글 1편을 발행 승인 직전 상태까지 완성",
+        "mode": "manual",
+        "coordinatorId": "mira",
+        "state": "awaiting_approval",
+        "stateVersion": 3,
+        "createdAt": "2026-11-16T09:00:00Z",
+        "updatedAt": "2026-11-16T09:00:00Z",
+        "acceptanceCriteria": [
+          "본문의 모든 수치·인용에 출처 링크가 있고 링크가 열린다",
+          "대표 이미지 1장 + 본문 이미지 2장이 1200px 기준으로 깨지지 않는다",
+          "네이버 블로그 에디터에 붙여넣은 미리보기에서 제목·소제목·이미지 순서가 맞다"
+        ],
+        "approval": {
+          "requiredFor": "publication",
+          "status": "requested",
+          "requestedAt": "2026-11-16T10:56:00Z",
+          "note": "사용자가 네이버 블로그 발행 버튼을 직접 누른다. 에이전트는 누르지 않는다."
+        },
+        "delivery": null,
+        "integration": {
+          "integrationId": "integration-v2",
+          "integratorId": "mira",
+          "decision": "pass",
+          "inputArtifactVersions": {
+            "A": "v1",
+            "B": "v2",
+            "C": "v1",
+            "D": "v2",
+            "E": "v2"
+          },
+          "checks": [
+            {
+              "criterion": "본문의 모든 수치·인용에 출처 링크가 있고 링크가 열린다",
+              "evidenceRef": "canvas://blog/integrated-check-1.png"
+            },
+            {
+              "criterion": "대표 이미지 1장 + 본문 이미지 2장이 1200px 기준으로 깨지지 않는다",
+              "evidenceRef": "canvas://blog/integrated-check-2.png"
+            },
+            {
+              "criterion": "네이버 블로그 에디터에 붙여넣은 미리보기에서 제목·소제목·이미지 순서가 맞다",
+              "evidenceRef": "canvas://blog/integrated-check-3.png"
+            }
+          ],
+          "integratedAt": "2026-11-16T10:55:00Z"
+        },
+        "tasks": [
+          {
+            "taskId": "A",
+            "ownerId": "researcher",
+            "reviewerId": "qa",
+            "objective": "주제 조사: 수강생 후기 3건·공식 문서 2건 인용 후보 수집",
+            "dependsOn": [],
+            "acceptanceCriteria": [
+              "인용 후보마다 URL·접속 확인 시각 기록"
+            ],
+            "state": "accepted",
+            "stateVersion": 4,
+            "artifact": {
+              "artifactId": "sources",
+              "version": "v1",
+              "location": "canvas://blog/sources-v1.md",
+              "producerId": "researcher",
+              "submittedAt": "2026-11-16T09:00:00Z",
+              "evidenceRefs": [
+                "canvas://blog/sources-v1-linkcheck.txt"
+              ],
+              "residualRisks": []
+            },
+            "inputVersions": {}
+          },
+          {
+            "taskId": "B",
+            "ownerId": "writer",
+            "reviewerId": "qa",
+            "objective": "초안 작성 (1,500자, 소제목 4개)",
+            "dependsOn": [
+              "A"
+            ],
+            "acceptanceCriteria": [
+              "A 의 출처만 인용",
+              "소제목 4개·1,300~1,700자"
+            ],
+            "state": "accepted",
+            "stateVersion": 4,
+            "artifact": {
+              "artifactId": "draft",
+              "version": "v2",
+              "location": "canvas://blog/draft-v2.md",
+              "producerId": "writer",
+              "submittedAt": "2026-11-16T10:10:00Z",
+              "evidenceRefs": [
+                "canvas://blog/draft-v2-evidence"
+              ],
+              "residualRisks": []
+            },
+            "inputVersions": {
+              "A": "v1"
+            }
+          },
+          {
+            "taskId": "C",
+            "ownerId": "designer",
+            "reviewerId": "qa",
+            "objective": "대표 이미지 1 + 본문 이미지 2 제작",
+            "dependsOn": [
+              "A"
+            ],
+            "acceptanceCriteria": [
+              "1200px 폭에서 글자 깨짐 없음",
+              "출처가 필요한 이미지는 A 에 기록된 것만"
+            ],
+            "state": "accepted",
+            "stateVersion": 4,
+            "artifact": {
+              "artifactId": "images",
+              "version": "v1",
+              "location": "canvas://blog/images-v1/",
+              "producerId": "designer",
+              "submittedAt": "2026-11-16T09:25:00Z",
+              "evidenceRefs": [
+                "canvas://blog/images-v1-1200px.png"
+              ],
+              "residualRisks": []
+            },
+            "inputVersions": {
+              "A": "v1"
+            }
+          },
+          {
+            "taskId": "D",
+            "ownerId": "mira",
+            "reviewerId": "qa",
+            "objective": "글+이미지 조립, 네이버 에디터 미리보기 생성",
+            "dependsOn": [
+              "B",
+              "C"
+            ],
+            "acceptanceCriteria": [
+              "최신 B/C 버전 반영",
+              "미리보기 캡처 저장"
+            ],
+            "state": "accepted",
+            "stateVersion": 4,
+            "artifact": {
+              "artifactId": "preview",
+              "version": "v2",
+              "location": "canvas://blog/preview-v2.png",
+              "producerId": "mira",
+              "submittedAt": "2026-11-16T10:25:00Z",
+              "evidenceRefs": [
+                "canvas://blog/preview-v2-evidence"
+              ],
+              "residualRisks": []
+            },
+            "inputVersions": {
+              "B": "v2",
+              "C": "v1"
+            }
+          },
+          {
+            "taskId": "E",
+            "ownerId": "qa",
+            "reviewerId": "codex-hand",
+            "objective": "독립 검수: 링크 전수 클릭·이미지·순서 확인",
+            "dependsOn": [
+              "D"
+            ],
+            "acceptanceCriteria": [
+              "3개 완료 기준 각각 증거 캡처"
+            ],
+            "state": "accepted",
+            "stateVersion": 4,
+            "artifact": {
+              "artifactId": "qa-report",
+              "version": "v2",
+              "location": "canvas://blog/qa-report-v2.md",
+              "producerId": "qa",
+              "submittedAt": "2026-11-16T10:40:00Z",
+              "evidenceRefs": [
+                "canvas://blog/qa-report-v2-evidence"
+              ],
+              "residualRisks": []
+            },
+            "inputVersions": {
+              "D": "v2"
+            }
+          }
+        ],
+        "reviews": [
+          {
+            "reviewId": "review-A-v1",
+            "taskId": "A",
+            "artifactVersion": "v1",
+            "reviewerId": "qa",
+            "decision": "pass",
+            "criteriaResults": [
+              {
+                "criterion": "인용 후보마다 URL·접속 확인 시각 기록",
+                "pass": true,
+                "evidenceRef": "canvas://blog/sources-v1-linkcheck.txt"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/sources-v1-linkcheck.txt"
+            ],
+            "reviewedAt": "2026-11-16T09:00:00Z"
+          },
+          {
+            "reviewId": "review-B-v1-initial",
+            "taskId": "B",
+            "artifactVersion": "v1",
+            "reviewerId": "qa",
+            "decision": "pass",
+            "criteriaResults": [
+              {
+                "criterion": "A 의 출처만 인용",
+                "pass": true,
+                "evidenceRef": "canvas://blog/draft-v1-cites.txt"
+              },
+              {
+                "criterion": "소제목 4개·1,300~1,700자",
+                "pass": true,
+                "evidenceRef": "canvas://blog/draft-v1-wordcount.txt"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/draft-v1-cites.txt",
+              "canvas://blog/draft-v1-wordcount.txt"
+            ],
+            "reviewedAt": "2026-11-16T09:30:00Z"
+          },
+          {
+            "reviewId": "review-C-v1",
+            "taskId": "C",
+            "artifactVersion": "v1",
+            "reviewerId": "qa",
+            "decision": "pass",
+            "criteriaResults": [
+              {
+                "criterion": "1200px 폭에서 글자 깨짐 없음",
+                "pass": true,
+                "evidenceRef": "canvas://blog/images-v1-1200px.png"
+              },
+              {
+                "criterion": "출처가 필요한 이미지는 A 에 기록된 것만",
+                "pass": true,
+                "evidenceRef": "canvas://blog/images-v1-sources.txt"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/images-v1-1200px.png",
+              "canvas://blog/images-v1-sources.txt"
+            ],
+            "reviewedAt": "2026-11-16T09:32:00Z"
+          },
+          {
+            "reviewId": "review-D-v1-initial",
+            "taskId": "D",
+            "artifactVersion": "v1",
+            "reviewerId": "qa",
+            "decision": "pass",
+            "criteriaResults": [
+              {
+                "criterion": "최신 B/C 버전 반영",
+                "pass": true,
+                "evidenceRef": "canvas://blog/preview-v1.png"
+              },
+              {
+                "criterion": "미리보기 캡처 저장",
+                "pass": true,
+                "evidenceRef": "canvas://blog/preview-v1.png"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/preview-v1.png"
+            ],
+            "reviewedAt": "2026-11-16T09:45:00Z"
+          },
+          {
+            "reviewId": "review-B-v1-revoked",
+            "taskId": "B",
+            "artifactVersion": "v1",
+            "reviewerId": "qa",
+            "decision": "changes_requested",
+            "criteriaResults": [
+              {
+                "criterion": "A 의 출처만 인용",
+                "pass": false,
+                "evidenceRef": "canvas://blog/qa-v1-link3-404.png"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/qa-v1-link3-404.png"
+            ],
+            "reviewedAt": "2026-11-16T09:58:00Z"
+          },
+          {
+            "reviewId": "review-B-v2",
+            "taskId": "B",
+            "artifactVersion": "v2",
+            "reviewerId": "qa",
+            "decision": "pass",
+            "criteriaResults": [
+              {
+                "criterion": "A 의 출처만 인용",
+                "pass": true,
+                "evidenceRef": "canvas://blog/draft-v2-evidence"
+              },
+              {
+                "criterion": "소제목 4개·1,300~1,700자",
+                "pass": true,
+                "evidenceRef": "canvas://blog/draft-v2-evidence"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/draft-v2-evidence"
+            ],
+            "reviewedAt": "2026-11-16T10:18:00Z"
+          },
+          {
+            "reviewId": "review-D-v2",
+            "taskId": "D",
+            "artifactVersion": "v2",
+            "reviewerId": "qa",
+            "decision": "pass",
+            "criteriaResults": [
+              {
+                "criterion": "최신 B/C 버전 반영",
+                "pass": true,
+                "evidenceRef": "canvas://blog/preview-v2-evidence"
+              },
+              {
+                "criterion": "미리보기 캡처 저장",
+                "pass": true,
+                "evidenceRef": "canvas://blog/preview-v2-evidence"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/preview-v2-evidence"
+            ],
+            "reviewedAt": "2026-11-16T10:32:00Z"
+          },
+          {
+            "reviewId": "review-E-v2",
+            "taskId": "E",
+            "artifactVersion": "v2",
+            "reviewerId": "codex-hand",
+            "decision": "pass",
+            "criteriaResults": [
+              {
+                "criterion": "3개 완료 기준 각각 증거 캡처",
+                "pass": true,
+                "evidenceRef": "canvas://blog/qa-report-v2-evidence"
+              }
+            ],
+            "evidenceRefs": [
+              "canvas://blog/qa-report-v2-evidence"
+            ],
+            "reviewedAt": "2026-11-16T10:48:00Z"
+          }
+        ],
+        "executions": [
+          {
+            "executionId": "exec-B-1",
+            "taskId": "B",
+            "runtime": "openclaw",
+            "runtimeNamespace": "vps-main",
+            "runtimeRunId": "run-b-1",
+            "childSessionKey": "sess-writer-1",
+            "parentSessionKey": "sess-mira",
+            "attempt": 1,
+            "state": "exited_success",
+            "startedAt": "2026-11-16T09:02:00Z",
+            "finishedAt": "2026-11-16T09:20:00Z"
+          },
+          {
+            "executionId": "exec-C-1",
+            "taskId": "C",
+            "runtime": "openclaw",
+            "runtimeNamespace": "vps-main",
+            "runtimeRunId": "run-c-1",
+            "childSessionKey": "sess-designer-1",
+            "parentSessionKey": "sess-mira",
+            "attempt": 1,
+            "state": "exited_success",
+            "startedAt": "2026-11-16T09:02:00Z",
+            "finishedAt": "2026-11-16T09:25:00Z"
+          },
+          {
+            "executionId": "exec-D-1",
+            "taskId": "D",
+            "runtime": "manual",
+            "runtimeNamespace": "vps-main",
+            "childSessionKey": "mira-assemble-1",
+            "attempt": 1,
+            "state": "exited_success",
+            "startedAt": "2026-11-16T09:33:00Z",
+            "finishedAt": "2026-11-16T09:40:00Z"
+          },
+          {
+            "executionId": "exec-B-2",
+            "taskId": "B",
+            "runtime": "openclaw",
+            "runtimeNamespace": "vps-main",
+            "runtimeRunId": "run-b-2",
+            "childSessionKey": "sess-writer-2",
+            "parentSessionKey": "sess-mira",
+            "attempt": 2,
+            "state": "exited_success",
+            "startedAt": "2026-11-16T10:00:00Z",
+            "finishedAt": "2026-11-16T10:10:00Z"
+          }
+        ],
+        "history": [
+          {
+            "type": "review_passed",
+            "ref": "review-B-v1-initial"
+          },
+          {
+            "type": "review_passed",
+            "ref": "review-C-v1"
+          },
+          {
+            "type": "downstream_started",
+            "ref": "exec-D-1"
+          },
+          {
+            "type": "review_passed",
+            "ref": "review-D-v1-initial"
+          },
+          {
+            "type": "defect_found",
+            "ref": "canvas://blog/qa-v1-link3-404.png"
+          },
+          {
+            "type": "review_revoked",
+            "ref": "review-B-v1-revoked"
+          },
+          {
+            "type": "downstream_stale",
+            "refs": [
+              "D",
+              "E"
+            ]
+          },
+          {
+            "type": "rework_submitted",
+            "ref": "B-v2"
+          },
+          {
+            "type": "descendants_rebuilt",
+            "refs": [
+              "D-v2",
+              "E-v2"
+            ]
+          },
+          {
+            "type": "integrated",
+            "ref": "integration-v2"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -19,3 +19,9 @@ test('delivery requires required approval',()=>{const r=copy();r.state='delivere
 test('approval status string alone cannot authorize delivery',()=>{const r=copy();r.state='delivered';r.delivery={verifiedAt:'2026-01-01',receiptRef:'demo://receipt'};r.approval.status='approved';assert.match(validateRun(r).join(' '),/version-scoped authenticated approval/);});
 test('scenario refuses mutation of the same artifact version',()=>{const a=copy(),b=copy();b.tasks[0].artifact.location='demo://different';assert.match(validateScenario([{run:a},{run:b}]).join(' '),/immutable artifact changed/);});
 test('review and integration cannot predate current evidence',()=>{const r=copy();r.reviews[0].reviewedAt='2025-12-31T23:00:00Z';assert.match(validateRun(r).join(' '),/review before artifact/);});
+
+// 4주차 블로그 예제: 세 스냅샷이 모두 계약을 지키고, 반려 스냅샷은 철회된 B v1 을 통과로 보지 않는다.
+const blog=JSON.parse(readFileSync(new URL('../examples/blog-post/scenario.json',import.meta.url),'utf8'));
+test('blog-post example snapshots validate',()=>{for(const s of blog.snapshots)assert.deepEqual(validateRun(s.run),[],s.id);assert.deepEqual(validateScenario(blog.snapshots),[]);});
+test('blog-post rework snapshot marks descendants stale after revoked review',()=>{const r=blog.snapshots[1].run;assert.equal(r.tasks.find(t=>t.taskId==='D').state,'stale');assert.equal(r.reviews.filter(x=>x.taskId==='B'&&x.artifactVersion==='v1').at(-1).decision,'changes_requested');});
+test('blog-post integrated snapshot stops at approval, never delivered',()=>{const r=blog.snapshots[2].run;assert.equal(r.state,'awaiting_approval');assert.equal(r.delivery,null);assert.equal(r.integration.decision,'pass');});

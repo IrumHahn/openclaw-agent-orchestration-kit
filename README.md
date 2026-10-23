@@ -4,12 +4,15 @@
 
 > 중요한 구분: 스킬은 총괄 에이전트가 따라야 하는 **운영 절차**입니다. 그것만으로 트랜잭션 큐, 자동 DAG 잠금, 실행 재시도, 승인 시스템이 새로 설치되는 것은 아닙니다. 현재 실행 환경에 있는 작업 저장소와 에이전트 실행 도구에 연결해 사용합니다.
 
+> 처음이라면 **[15분 퀵스타트(한국어)](docs/quickstart-ko.md)** → 4주차 과제 예제 **[내 팀으로 블로그 글 1편](examples/blog-post/README.md)**. 스킬은 `Lite`(원장 1장) 모드로 시작한다.
+
 ## 구성
 
-- [스킬](skill/agent-orchestration/SKILL.md) — 복합 요청 접수 → 작업 분해 → 실제 위임 → 독립 QA → 통합·전달 확인.
+- [스킬](skill/agent-orchestration/SKILL.md) — 모드 고르기(Lite/Design/Instrumented/Audit) → 작업 분해 → 실제 위임 → 독립 QA → 통합·전달 확인. Lite 는 [수동 원장 템플릿](skill/agent-orchestration/references/ledger-template.md) 하나로 운영.
 - [구조 설계](docs/architecture.md) — 상태·데이터 계약·권한 경계·실패 복구·단계별 도입.
 - [임시 서브에이전트 설계](docs/subagent-runtime.md) — OpenClaw 자식 세션·중첩 실행·검수·실패 복구를 작업 원장에 연결하는 계약. 현재 구현 완료를 뜻하지 않습니다.
-- [가상 실습 데이터](examples/product-page/scenario.json) — 실제 근거가 붙은 세 단계 스냅샷과 검증기.
+- [4주차 과제 예제 · 블로그 글 1편](examples/blog-post/README.md) — 조사→초안·이미지 병렬→조립→독립 검수, 출처 링크 404 반려 1회 포함. 검증기 통과.
+- [가상 실습 데이터 · 상품 상세페이지](examples/product-page/scenario.json) — 세 단계 스냅샷과 검증기.
 - [수업 교안](docs/classroom-guide.md) — 진행 흐름, 시연, 과제, 평가 기준.
 - [시각화 예시](dashboard/) — 프로젝트별 흐름 화면과 데이터 연결 가이드.
 
@@ -19,9 +22,13 @@
 2. OpenClaw 연동을 원하면 저장소 루트에서 아래 명령으로 `skill/agent-orchestration` 폴더 **전체**를 복사합니다. 새 OpenClaw 세션에서 “agent-orchestration 스킬이 보이는지 알려줘”라고 물어 이름과 설명이 인식되는지 확인합니다. 오프라인 수업만 진행한다면 이 설치는 필요 없습니다.
 
 ```sh
+git clone https://github.com/IrumHahn/openclaw-agent-orchestration-kit.git
 mkdir -p ~/.openclaw/skills
-cp -R skill/agent-orchestration ~/.openclaw/skills/
+cp -R openclaw-agent-orchestration-kit/skill/agent-orchestration ~/.openclaw/skills/
+openclaw skills list    # agent-orchestration 이 보이면 성공
 ```
+
+(VPS 등 OpenClaw 가 설치된 곳의 터미널에서. `openclaw skills install` 명령은 버전에 따라 없을 수 있어 폴더 복사를 표준으로 한다.)
 
 `references/`와 `examples/`를 함께 복사해야 독립 설치가 됩니다. 기존 같은 이름의 폴더가 있다면 덮어쓰기 전에 백업하고 차이를 확인하세요.
 3. 한 개의 작업 원장(프로젝트/태스크 저장소)을 정합니다. OpenClaw 자체 세션·자동화 기록과 작업 카드가 다르면, 둘 중 무엇이 최종 상태의 권위 있는 기록인지 먼저 정합니다.
@@ -39,7 +46,7 @@ cp -R skill/agent-orchestration ~/.openclaw/skills/
 
 5. [가상 실습](examples/product-page/scenario.json)으로 먼저 전체 흐름을 연습합니다. 오프라인 경로는 Node.js와 브라우저만 필요합니다. OpenClaw 연동 경로는 위 스킬 설치와 현재 환경의 실행 도구를 추가로 확인합니다. 외부 발송이나 실제 고객 데이터를 사용하지 않습니다.
 
-저장소 루트에서 `node scripts/validate-run.mjs examples/product-page/sample-run.json examples/product-page/scenario.json`과 `node --test scripts/validate-run.test.mjs dashboard/flow-model.test.mjs`로 샘플을 검증할 수 있습니다. 시각 데모는 `python3 -m http.server 8765` 실행 후 `http://localhost:8765/dashboard/demo.html`로 엽니다. 스킬만 복사한 설치에는 데모·검증기가 포함되지 않습니다.
+저장소 루트에서 `node scripts/validate-run.mjs examples/blog-post/scenario.json examples/product-page/scenario.json`과 `node --test scripts/validate-run.test.mjs dashboard/flow-model.test.mjs`로 샘플을 검증할 수 있습니다. 시각 데모는 `python3 -m http.server 8765` 실행 후 `http://localhost:8765/dashboard/demo.html`로 엽니다. 스킬만 복사한 설치에는 데모·검증기가 포함되지 않습니다.
 
 운영 수준은 **설계 → 수동 원장 → 실제 위임 접수증 → 독립 QA/재작업 → 선택적 저장소·화면 연동 → 자동 제어면** 순서로 높입니다. 설치만으로 자동 DAG·OpenClaw 훅·검수 권한이 생겼다고 설명하지 않습니다.
 
