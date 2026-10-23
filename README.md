@@ -23,12 +23,11 @@
 
 ```sh
 git clone https://github.com/IrumHahn/openclaw-agent-orchestration-kit.git
-mkdir -p ~/.openclaw/skills
-cp -R openclaw-agent-orchestration-kit/skill/agent-orchestration ~/.openclaw/skills/
-openclaw skills list    # agent-orchestration 이 보이면 성공
+openclaw skills install ./openclaw-agent-orchestration-kit/skill/agent-orchestration --as agent-orchestration --agent main
+openclaw skills list | grep agent-orchestration    # ready 가 보이면 성공
 ```
 
-(VPS 등 OpenClaw 가 설치된 곳의 터미널에서. `openclaw skills install` 명령은 버전에 따라 없을 수 있어 폴더 복사를 표준으로 한다.)
+(VPS 등 OpenClaw 가 설치된 곳의 터미널에서. `--agent main` 은 에이전트가 2명 이상이면 필수. 구버전에 `skills install` 이 없으면 `cp -R skill/agent-orchestration ~/.openclaw/skills/`.)
 
 `references/`와 `examples/`를 함께 복사해야 독립 설치가 됩니다. 기존 같은 이름의 폴더가 있다면 덮어쓰기 전에 백업하고 차이를 확인하세요.
 3. 한 개의 작업 원장(프로젝트/태스크 저장소)을 정합니다. OpenClaw 자체 세션·자동화 기록과 작업 카드가 다르면, 둘 중 무엇이 최종 상태의 권위 있는 기록인지 먼저 정합니다.

@@ -18,12 +18,11 @@
 ```bash
 cd ~
 git clone https://github.com/IrumHahn/openclaw-agent-orchestration-kit.git
-mkdir -p ~/.openclaw/skills
-cp -R openclaw-agent-orchestration-kit/skill/agent-orchestration ~/.openclaw/skills/
-openclaw skills list      # agent-orchestration 이 보이면 성공
+openclaw skills install ./openclaw-agent-orchestration-kit/skill/agent-orchestration --as agent-orchestration --agent main
+openclaw skills list | grep agent-orchestration      # ready 가 보이면 성공
 ```
 
-`references/` 와 `examples/` 가 같이 복사돼야 합니다(위 명령은 폴더째 복사하므로 괜찮습니다).
+`--agent main` 은 에이전트가 2명 이상일 때 필수입니다. `references/`(원장 템플릿) 와 `examples/` 가 함께 설치됩니다.
 
 ## 2. 첫 실행 (OpenClaw 채팅, 5분)
 
